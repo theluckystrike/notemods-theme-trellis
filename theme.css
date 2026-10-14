@@ -1,17 +1,10 @@
-/* trellis — outline-heavy writing. Indigo, counter-numbered headings,
+/* trellis — outline-heavy writing. Indigo, clear heading levels,
    guide-rail nested lists, tab-strip callouts. Original CSS, MIT. No network assets. */
 
 :root {
   --u2-indigo: #4753c4;
   --u2-font-ui: -apple-system, "Segoe UI", sans-serif;
   --u2-font-mono: "SF Mono", Menlo, Consolas, monospace;
-}
-
-/* Section counter style: renders "n. " for n>=1 and nothing at all for 0,
-   so a level-2 heading with no preceding level-1 never shows a "0." prefix. */
-@counter-style u2-sec {
-  system: numeric;
-  symbols: "\2060" "1." "2." "3." "4." "5." "6." "7." "8." "9.";
 }
 
 .theme-light {
@@ -66,7 +59,9 @@
   max-width: 44rem;
 }
 
-/* Headings: counter-numbered hierarchy (Reading view + Live Preview) */
+/* Heading hierarchy in Reading view and Live Preview. Numbering belongs in
+   the note text: both views virtualize off-screen content, so CSS counters
+   cannot reliably number a whole note. */
 .markdown-rendered h1, .markdown-rendered h2, .markdown-rendered h3,
 .markdown-rendered h4, .markdown-rendered h5, .markdown-rendered h6,
 .HyperMD-header {
@@ -75,43 +70,15 @@
   color: var(--u2-text);
 }
 
-/* Keep the outline counters in one scope across reading-view sections and
-   across the editor's rendered lines, so numbering is continuous. */
-.markdown-preview-view,
-.markdown-source-view .cm-content {
-  counter-reset: u2-h1 u2-h2;
-}
-.markdown-preview-view .markdown-preview-section {
-  contain: none;
-  content-visibility: visible;
-}
-
-/* Level 1 -> "1. Title" */
+/* Strong level-one headings and ruled level-two headings need no counters. */
 .markdown-rendered h1, .HyperMD-header-1 {
   font-size: 1.5em;
-  counter-increment: u2-h1;
-  counter-reset: u2-h2;
 }
-.markdown-rendered h1::before, .HyperMD-header-1::before {
-  content: counter(u2-h1) ". ";
-  color: var(--u2-link);
-}
-/* Level 2 -> "n.1 Title" under level 1 n; bare number when no level 1 yet */
 .markdown-rendered h2, .HyperMD-header-2 {
   font-size: 1.2em;
-  counter-increment: u2-h2;
   border-left: 3px solid var(--u2-indigo);
   padding-left: 0.4em;
 }
-.markdown-rendered h2::before, .HyperMD-header-2::before {
-  content: counter(u2-h1, u2-sec) counter(u2-h2) " ";
-  color: var(--u2-link);
-  font-weight: 600;
-}
-/* Reading view nests sections by level: reset the minor counter on the
-   section that owns a level-1 heading. (The h1 rule above already resets it
-   for the flat Live Preview line stream.) */
-.markdown-preview-section:has(> h1) { counter-reset: u2-h2; }
 
 .markdown-rendered h3 { font-size: 1.05em; letter-spacing: 0.07em; color: var(--u2-link); }
 .markdown-rendered h4, .markdown-rendered h5, .markdown-rendered h6 { font-size: 1em; color: var(--u2-text-muted); }

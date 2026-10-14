@@ -1,16 +1,23 @@
 {
   "schemaVersion": 1,
   "theme": "Trellis",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "status": "HOLD",
-  "score": 71,
+  "score": null,
   "requiredScore": 95,
-  "reviewedAt": "2026-10-14T15:41:39",
-  "reviewer": "claude-orchestrator",
+  "reviewedAt": null,
+  "reviewer": null,
   "accepted": false,
   "directoryApprovalClaimed": false,
-  "majorDefects": [
-    "Heading counters can show 2.2 where 2.1 is expected."
-  ],
-  "note": "This records the source review. New repository documentation has not been rescored."
+  "historicalSourceReview": {
+    "version": "1.0.0",
+    "score": 71,
+    "reviewedAt": "2026-10-14T15:41:39",
+    "reviewer": "claude-orchestrator",
+    "majorDefectsAtReview": [
+      "Heading counters can show 2.2 where 2.1 is expected."
+    ]
+  },
+  "repair": "Removed automatic CSS heading numbering from Reading view and Live Preview. Native Obsidian 1.14.4 regression checks pass in both modes at the start and end of a long note.",
+  "note": "The current release has no independent quality score. The source review is historical. This repair does not grant 95-point acceptance."
 }

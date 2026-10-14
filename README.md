@@ -1,18 +1,19 @@
 # Trellis
 
-Heading numbers and list guides for your structured outlines.
+Clear heading levels and list guides for your structured outlines.
 
 This is a preview theme with light and dark modes.
 
 ## Preview status
 
-An independent review scored this version 71/100 on 14 October 2026.
-The NoteMods acceptance gate requires at least 95/100. This version remains on hold.
+An independent review scored the original 1.0.0 source 71/100 on 14 October 2026.
+Version 1.0.1 removes unreliable automatic heading numbers. It has not received a new independent quality score.
+The NoteMods acceptance gate requires at least 95/100. This preview remains on hold.
 Obsidian directory approval is not claimed.
 
 ## Design
 
-- Numbered heading hierarchy.
+- Strong heading hierarchy with ruled level two headings.
 - Nested list rails.
 - Tab style callout headers.
 
@@ -21,19 +22,24 @@ These styles change presentation. They do not add application features or plugin
 ## Screenshots
 
 These are unaltered captures from Obsidian 1.14.4 with a test note.
-They show Live Preview and Reading view side by side.
+They show version 1.0.1 in Live Preview and Reading view side by side.
+Numbers shown in headings are part of the test note. The theme does not generate them.
 
 ### Light mode
 
 ![Trellis in light mode](./images/light.jpg)
 
+![Trellis callout and table in light mode](./images/light-callouts.jpg)
+
 ### Dark mode
 
 ![Trellis in dark mode](./images/dark.jpg)
 
+![Trellis callout and table in dark mode](./images/dark-callouts.jpg)
+
 ## Install the preview
 
-1. Download `theme.css` and `manifest.json` from the `1.0.0` release.
+1. Download `theme.css` and `manifest.json` from the `1.0.1` release.
 2. Open your vault folder. Show hidden folders if necessary.
 3. Create `.obsidian/themes/Trellis/` inside the vault.
 4. Put both files in that folder. Keep their file names unchanged.
@@ -52,7 +58,7 @@ Your note files remain in your vault.
 
 ## Known limits
 
-- Heading counters are incorrect. A level two heading can show 2.2 where 2.1 is expected.
+- Automatic heading numbering is not supported. Type numbers in your Markdown headings when you need a stable outline.
 - Desktop captures use Obsidian 1.14.4. Real mobile device use has not been verified.
 - A narrow desktop capture does not prove mobile compatibility.
 - Full keyboard navigation and assistive technology checks remain incomplete.
@@ -68,7 +74,8 @@ Use a test note. Remove personal information from screenshots before you send th
 ## Credits and licence
 
 The original manifest credits U2 Writers and Editors.
-NoteMods maintains this preview repository. The original CSS, manifest, and licence are preserved.
+NoteMods maintains this preview repository.
+The original copyright notice and MIT terms are preserved. NoteMods changed the CSS and manifest for version 1.0.1.
 See [LICENSE](./LICENSE) for the MIT terms.
 
 [View the NoteMods catalog](https://notemods.com/themes/).
