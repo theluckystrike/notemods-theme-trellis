@@ -1,0 +1,206 @@
+/* trellis — outline-heavy writing. Indigo, counter-numbered headings,
+   guide-rail nested lists, tab-strip callouts. Original CSS, MIT. No network assets. */
+
+:root {
+  --u2-indigo: #4753c4;
+  --u2-font-ui: -apple-system, "Segoe UI", sans-serif;
+  --u2-font-mono: "SF Mono", Menlo, Consolas, monospace;
+}
+
+/* Section counter style: renders "n. " for n>=1 and nothing at all for 0,
+   so a level-2 heading with no preceding level-1 never shows a "0." prefix. */
+@counter-style u2-sec {
+  system: numeric;
+  symbols: "\2060" "1." "2." "3." "4." "5." "6." "7." "8." "9.";
+}
+
+.theme-light {
+  --u2-bg: #fbfbfd;
+  --u2-bg-soft: #eceef6;
+  --u2-text: #23263a;          /* ~13.4:1 */
+  --u2-text-muted: #5c6078;
+  --u2-link: #3a46b0;          /* ~7.1:1 */
+  --u2-focus: #4753c4;
+  --u2-border: #d4d7e4;
+  --u2-rail: rgba(71, 83, 196, 0.28);
+  --u2-strip: #e4e7f3;
+}
+
+.theme-dark {
+  --u2-bg: #17181f;
+  --u2-bg-soft: #1f212c;
+  --u2-text: #e2e4ee;          /* ~13.4:1 */
+  --u2-text-muted: #9296ad;
+  --u2-link: #a8b1ff;          /* ~9.6:1 */
+  --u2-focus: #a8b1ff;
+  --u2-border: #313445;
+  --u2-rail: rgba(168, 177, 255, 0.3);
+  --u2-strip: #262a3a;
+}
+
+.theme-light, .theme-dark {
+  --background-primary: var(--u2-bg);
+  --background-secondary: var(--u2-bg-soft);
+  --text-normal: var(--u2-text);
+  --text-muted: var(--u2-text-muted);
+  --link-color: var(--u2-link);
+  --text-accent: var(--u2-link);
+  --interactive-accent: var(--u2-indigo);
+  --border-color: var(--u2-border);
+  --background-modifier-border: var(--u2-border);
+  --divider-color: var(--u2-border);
+  --background-modifier-border-hover: var(--u2-focus);
+  --background-modifier-border-focus: var(--u2-focus);
+  --input-focus-border-color: var(--u2-focus);
+}
+
+/* Body: compact sans, tight rhythm for dense outlines */
+.markdown-source-view.mod-cm6 .cm-scroller,
+.markdown-preview-view {
+  font-family: var(--u2-font-ui);
+  font-size: 0.98em;
+  line-height: 1.6;
+}
+.markdown-source-view.is-readable-line-width .cm-sizer,
+.markdown-preview-view.is-readable-line-width .markdown-preview-sizer {
+  max-width: 44rem;
+}
+
+/* Headings: counter-numbered hierarchy (Reading view + Live Preview) */
+.markdown-rendered h1, .markdown-rendered h2, .markdown-rendered h3,
+.markdown-rendered h4, .markdown-rendered h5, .markdown-rendered h6,
+.HyperMD-header {
+  font-family: var(--u2-font-ui);
+  font-weight: 700;
+  color: var(--u2-text);
+}
+
+/* Keep the outline counters in one scope across reading-view sections and
+   across the editor's rendered lines, so numbering is continuous. */
+.markdown-preview-view,
+.markdown-source-view .cm-content {
+  counter-reset: u2-h1 u2-h2;
+}
+.markdown-preview-view .markdown-preview-section {
+  contain: none;
+  content-visibility: visible;
+}
+
+/* Level 1 -> "1. Title" */
+.markdown-rendered h1, .HyperMD-header-1 {
+  font-size: 1.5em;
+  counter-increment: u2-h1;
+  counter-reset: u2-h2;
+}
+.markdown-rendered h1::before, .HyperMD-header-1::before {
+  content: counter(u2-h1) ". ";
+  color: var(--u2-link);
+}
+/* Level 2 -> "n.1 Title" under level 1 n; bare number when no level 1 yet */
+.markdown-rendered h2, .HyperMD-header-2 {
+  font-size: 1.2em;
+  counter-increment: u2-h2;
+  border-left: 3px solid var(--u2-indigo);
+  padding-left: 0.4em;
+}
+.markdown-rendered h2::before, .HyperMD-header-2::before {
+  content: counter(u2-h1, u2-sec) counter(u2-h2) " ";
+  color: var(--u2-link);
+  font-weight: 600;
+}
+/* Reading view nests sections by level: reset the minor counter on the
+   section that owns a level-1 heading. (The h1 rule above already resets it
+   for the flat Live Preview line stream.) */
+.markdown-preview-section:has(> h1) { counter-reset: u2-h2; }
+
+.markdown-rendered h3 { font-size: 1.05em; letter-spacing: 0.07em; color: var(--u2-link); }
+.markdown-rendered h4, .markdown-rendered h5, .markdown-rendered h6 { font-size: 1em; color: var(--u2-text-muted); }
+
+/* Paragraphs: compact blocks */
+.markdown-rendered p { margin-block: 0.55em; }
+
+/* Lists: vertical guide rails on nesting */
+.markdown-rendered ul { padding-inline-start: 1.5em; }
+.markdown-rendered ul ul {
+  border-left: 1px solid var(--u2-rail);
+  margin-left: 0.35em;
+  padding-left: 0.8em;
+}
+.markdown-rendered li { margin-block: 0.12em; }
+.markdown-rendered ul > li::marker { color: var(--u2-link); }
+
+/* Tasks: square indigo boxes */
+.markdown-rendered .task-list-item-checkbox {
+  border: 1.5px solid var(--u2-indigo);
+  border-radius: 3px;
+  background: transparent;
+}
+.markdown-rendered .task-list-item-checkbox:checked {
+  background: var(--u2-indigo);
+  box-shadow: inset 0 0 0 2px var(--u2-bg);
+}
+
+/* Callouts: header tab strip */
+.callout {
+  background: transparent;
+  border: 1px solid var(--u2-border);
+  border-radius: 6px;
+  padding: 0;
+  overflow: hidden;
+  mix-blend-mode: normal;
+}
+.callout-title {
+  background: var(--u2-strip);
+  padding: 0.35em 0.9em;
+  font-weight: 600;
+  color: var(--u2-link);
+  border-bottom: 1px solid var(--u2-border);
+}
+.callout-content { padding: 0.6em 0.9em; }
+
+/* Code: mono, framed */
+.markdown-rendered :not(pre) > code {
+  font-family: var(--u2-font-mono);
+  background: var(--u2-strip);
+  border-radius: 3px;
+  font-size: 0.88em;
+}
+.markdown-rendered pre { border: 1px solid var(--u2-border); border-radius: 6px; }
+
+/* Tables: grid, indigo header */
+.markdown-rendered table { border-collapse: collapse; }
+.markdown-rendered th {
+  background: var(--u2-strip);
+  color: var(--u2-text);
+  border: 1px solid var(--u2-border);
+}
+.markdown-rendered td { border: 1px solid var(--u2-border); }
+
+/* Links and focus */
+.markdown-rendered a, .cm-s-obsidian .cm-hmd-internal-link { color: var(--u2-link); }
+:is(.workspace, .markdown-rendered, .cm-s-obsidian) :focus-visible {
+  outline: 2px solid var(--u2-focus);
+  outline-offset: 1px;
+  border-radius: 4px;
+}
+
+/* Tabs/nav/search/settings: structured chrome */
+.workspace-tab-header.is-active .workspace-tab-header-inner {
+  color: var(--u2-link);
+  box-shadow: inset 0 -2px 0 var(--u2-indigo);
+}
+.nav-file-title.is-active, .nav-folder-title.is-active { background: var(--u2-strip); }
+.search-result-file-title { color: var(--u2-text); }
+
+::selection { background: rgba(71, 83, 196, 0.2); }
+
+/* Narrow layouts: compress nesting rails, scrollable tables */
+@media (max-width: 640px) {
+  .markdown-rendered ul ul { margin-left: 0.15em; padding-left: 0.6em; }
+  .callout-content { padding: 0.5em 0.7em; }
+  .markdown-rendered table { display: block; overflow-x: auto; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}
